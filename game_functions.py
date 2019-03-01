@@ -68,7 +68,8 @@ def create_alien(ai_settings, screen, aliens, alien_number, row_number):
     alien.rect.y = alien.y
     aliens.add(alien)
 
-def update_aliens(aliens):
+def update_aliens(ai_settings, aliens):
+    check_fleet_edges(ai_settings,aliens)
     aliens.update()
 
 def create_fleet(ai_settings, screen, ship, aliens):
@@ -79,12 +80,23 @@ def create_fleet(ai_settings, screen, ship, aliens):
         for alien_number in range(number_aliens_x):
             create_alien(ai_settings, screen, aliens, alien_number, row_number)
 
+def check_fleet_edges(ai_settings, aliens):
+    for alien in aliens.sprites():
+        if alien.check_edges():
+            change_fleet_direction(ai_settings, aliens)
+            break
+
+def change_fleet_direction(ai_settings, aliens):
+    for alien in aliens.sprites():
+        alien.rect.y += ai_settings.fleet_drop_speed_factor
+    ai_settings.fleet_direction *= -1
+
+
 
 def fire_bullets(ai_settings, screen, ship, bullets):
     if len(bullets) < ai_settings.bullet_allowed:
         new_bullet = Bullet(ai_settings, screen, ship)
         bullets.add(new_bullet)
-
 
 def quit_game():
     sys.exit()
