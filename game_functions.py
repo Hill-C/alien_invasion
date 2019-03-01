@@ -68,6 +68,8 @@ def create_alien(ai_settings, screen, aliens, alien_number, row_number):
     alien.rect.y = alien.y
     aliens.add(alien)
 
+def update_aliens(aliens):
+    aliens.update()
 
 def create_fleet(ai_settings, screen, ship, aliens):
     alien = Alien(ai_settings, screen)
